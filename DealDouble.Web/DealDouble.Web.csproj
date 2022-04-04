@@ -179,6 +179,8 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\AuctionsViewModels.cs" />
+    <Compile Include="ViewModels\BaseViewModels.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\css\shop-homepage.css" />
@@ -260,6 +262,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <None Include="packages.config" />
+    <Content Include="Views\Auctions\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DealDouble.Entities\DealDouble.Entities.csproj">

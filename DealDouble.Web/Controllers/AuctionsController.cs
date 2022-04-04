@@ -10,10 +10,10 @@ namespace DealDouble.Web.Controllers
 {
     public class AuctionsController : Controller
     {
+        AuctionService aser = new AuctionService();
         [HttpGet]
         public ActionResult Index()
         {
-            AuctionService aser = new AuctionService();
             var listauction = aser.GetAuctions();
             if(Request.IsAjaxRequest())
             {
@@ -35,7 +35,6 @@ namespace DealDouble.Web.Controllers
         [HttpPost]
         public ActionResult Create(Auction auction)
         {
-            AuctionService aser = new AuctionService();
             aser.SaveAuction(auction);
             return RedirectToAction("Index");
         }
@@ -43,7 +42,6 @@ namespace DealDouble.Web.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            AuctionService aser = new AuctionService();
             var auction = aser.GetAuction(id);
             return PartialView(auction);
         }
@@ -51,7 +49,6 @@ namespace DealDouble.Web.Controllers
         [HttpPost]
         public ActionResult Edit(Auction auction)
         {
-            AuctionService aser = new AuctionService();
             aser.UpdateAuction(auction);
             return RedirectToAction("Index");
         }
@@ -59,7 +56,6 @@ namespace DealDouble.Web.Controllers
         [HttpGet]
         public ActionResult Delete(int id)
         {
-            AuctionService aser = new AuctionService();
             var auction = aser.GetAuction(id);
             return View(auction);
         }
@@ -67,9 +63,15 @@ namespace DealDouble.Web.Controllers
         [HttpPost]
         public ActionResult Delete(Auction auction)
         {
-            AuctionService aser = new AuctionService();
             aser.DeleteAuction(auction);
             return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public ActionResult Details(int id)
+        {
+            var auction = aser.GetAuction(id);
+            return View(auction);
         }
     }
 }
