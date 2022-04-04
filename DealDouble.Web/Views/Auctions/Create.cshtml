@@ -1,25 +1,35 @@
 ﻿<h2>Create Auction</h2>
 
 <form id="createForm" method="post" action="Auctions/Create">
-    <label>Title</label>
-    <input type="text" name="Title" />
-    <br />
-    <label>Picture</label>
-    <input type="text" name="PictureURL" />
-    <br />
-    <label>Description</label>
-    <input type="text" name="Description" />
-    <br />
-    <label>ActualAmount</label>
-    <input type="number" name="ActualAmount" />
-    <br />
-    <label>StartingTime</label>
-    <input type="text" name="StartingTime" />
-    <br />
-    <label>EndTime</label>
-    <input type="text" name="EndTime" />
-    <br />
-    <button type="button" id="saveButton">Save</button>
+
+    <div class="form-group">
+        <label>Title</label>
+        <input class="form-control" type="text" name="Title" />
+    </div>
+    
+    <div class="form-group">
+        <label>Picture</label>
+        <input class="form-control" type="text" name="PictureURL" />
+    </div>
+    <div class="form-group">
+        <label>Description</label>
+        <input class="form-control" type="text" name="Description" />
+    </div>
+    <div class="form-group">
+        <label>ActualAmount</label>
+        <input class="form-control" type="number" name="ActualAmount" />
+    </div>
+    <div class="form-group">
+        <label>StartingTime</label>
+        <input class="form-control" type="text" name="StartingTime" />
+    </div>
+    <div class="form-group">
+        <label>EndTime</label>
+        <input class="form-control" type="text" name="EndTime" />
+    </div>
+    <div class="form-group">
+        <button class="form-control btn btn-success" type="button" id="saveButton">Save</button>
+    </div>
 </form>
 
 <script src="~/Scripts/ControllerScripts/Auctions.js"></script>

@@ -3,29 +3,37 @@
     ViewBag.Title = "Edit";
 }
 
-<h2>Edit</h2>
+<h2>Edit Auction</h2>
 
-<form id="editForm" method="post">
-    <input name="ID" hidden value="@Model.ID"/>
-    <label>Title</label>
-    <input type="text" name="Title" value="@Model.Title"/>
-    <br />
-    <label>Picture</label>
-    <input type="text" name="PictureURL" value="@Model.PictureURL"/>
-    <br />
-    <label>Description</label>
-    <input type="text" name="Description" value="@Model.Description"/>
-    <br />
-    <label>ActualAmount</label>
-    <input type="number" name="ActualAmount" value="@Model.ActualAmount"/>
-    <br />
-    <label>StartingTime</label>
-    <input type="text" name="StartingTime" value="@Model.StartingTime"/>
-    <br />
-    <label>EndTime</label>
-    <input type="text" name="EndTime" value="@Model.EndTime"/>
-    <br />
-    <button type="button" id="updateButton">Save</button>
+<form id="editForm">
+    <input type="hidden" name="ID" value="@Model.ID" />
+
+    <div class="form-group">
+        <label for="Title">Title</label>
+        <input type="text" class="form-control" name="Title" id="Title" value="@Model.Title" />
+    </div>
+
+    <div class="form-group">
+        <label for="Description">Description</label>
+        <input type="text" class="form-control" name="Description" id="Description" value="@Model.Description" />
+    </div>
+
+    <div class="form-group">
+        <label for="ActualPrice">Actual Price</label>
+        <input type="number" class="form-control" name="ActualAmount" id="ActualAmount" value="@Model.ActualAmount" />
+    </div>
+
+    <div class="form-group">
+        <label for="StartingTime">Starting Time</label>
+        <input type="text" class="form-control" name="StartingTime" id="StartingTime" value="@Model.StartingTime" />
+    </div>
+
+    <div class="form-group">
+        <label for="EndingTime">Ending Time</label>
+        <input type="text" class="form-control" name="EndTime" id="EndTime" value="@Model.EndTime" />
+    </div>
+
+    <button type="button" class="btn btn-success" id="updateButton">Update</button>
 </form>
 
 <script src="~/Scripts/ControllerScripts/Auctions.js"></script>

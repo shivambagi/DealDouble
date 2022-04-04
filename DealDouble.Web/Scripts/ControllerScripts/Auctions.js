@@ -3,7 +3,7 @@
         url: "/Auctions/Create",
         method: "get"
     }).done(function (response) {
-        $("#contentArea").html(response);
+        $("#actionArea").html(response);
     })
 });
 
@@ -24,7 +24,7 @@ $(".editButton").click(function () {
         method: "get",
         data: { id : $(this).attr('data-id') }
     }).done(function (response) {
-        $("#contentArea").html(response);
+        $("#actionArea").html(response);
     })
 });
 
