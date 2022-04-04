@@ -3,55 +3,69 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<div id="listingArea">
+    <h2>Index</h2>
 
-<table>
-    <thead>
-        <tr>
-            <th>
-                Title
-            </th>
-            <th>
-                Description
-            </th>
-            <th>
-                Amount
-            </th>
-            <th>
-                StartTime
-            </th>
-            <th>
-                EndTime
-            </th>
-            <th>
-                Options
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-        <tr>
-            <td>
-                @item.Title
-            </td>
-            <td>
-                @item.Description
-            </td>
-            <td>
-                @item.ActualAmount
-            </td>
-            <td>
-                @item.StartingTime
-            </td>
-            <td>
-                @item.EndTime
-            </td>
-            <td>
-                <a href="Delete/@item.ID">Delete</a>
-                <a href="Edit/@item.ID">Edit</a>
-            </td>
-        </tr>
-        }
-    </tbody>
-</table>
+    <table>
+        <thead>
+            <tr>
+                <th>
+                    Title
+                </th>
+                <th>
+                    Description
+                </th>
+                <th>
+                    Amount
+                </th>
+                <th>
+                    StartTime
+                </th>
+                <th>
+                    EndTime
+                </th>
+                <th>
+                    Options
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var auction in Model)
+            {
+                <tr>
+                    <td>
+                        @auction.Title
+                    </td>
+                    <td>
+                        @auction.Description
+                    </td>
+                    <td>
+                        @auction.ActualAmount
+                    </td>
+                    <td>
+                        @auction.StartingTime
+                    </td>
+                    <td>
+                        @auction.EndTime
+                    </td>
+                    <td>
+                        <button class="editButton" data-id="@auction.ID">Edit</button>
+                        <button class="deleteButton" data-id="@auction.ID">Delete</button>
+                        @*<a href="Delete/@item.ID">Delete</a>
+                        <a href="Edit/@item.ID">Edit</a>*@
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div>
+        <button id="createButton">Create</button>
+    </div>
+
+    <div id="contentArea">
+
+    </div>
+</div>
+
+<script src="~/Scripts/ControllerScripts/Auctions.js"></script>

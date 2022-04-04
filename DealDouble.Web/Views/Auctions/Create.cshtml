@@ -1,6 +1,6 @@
 ﻿<h2>Create Auction</h2>
 
-<form method="post">
+<form id="createForm" method="post" action="Auctions/Create">
     <label>Title</label>
     <input type="text" name="Title" />
     <br />
@@ -19,5 +19,7 @@
     <label>EndTime</label>
     <input type="text" name="EndTime" />
     <br />
-    <button>Save</button>
+    <button type="button" id="saveButton">Save</button>
 </form>
+
+<script src="~/Scripts/ControllerScripts/Auctions.js"></script>

@@ -5,7 +5,7 @@
 
 <h2>Edit</h2>
 
-<form method="post">
+<form id="editForm" method="post">
     <input name="ID" hidden value="@Model.ID"/>
     <label>Title</label>
     <input type="text" name="Title" value="@Model.Title"/>
@@ -25,5 +25,7 @@
     <label>EndTime</label>
     <input type="text" name="EndTime" value="@Model.EndTime"/>
     <br />
-    <button>Save</button>
+    <button type="button" id="updateButton">Save</button>
 </form>
+
+<script src="~/Scripts/ControllerScripts/Auctions.js"></script>
