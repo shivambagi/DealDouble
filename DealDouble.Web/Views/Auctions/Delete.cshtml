@@ -1,0 +1,16 @@
+﻿@model DealDouble.Entities.Auction
+<h2>
+    Are you sure you want delete?
+</h2>
+
+<form method="post">
+    <input name="ID" hidden value="@Model.ID" />
+    <button>
+        Yes
+    </button>    
+</form>
+
+
+<a href="@Url.Action("Index","Auctions")">Back</a>
+
+

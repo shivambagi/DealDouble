@@ -21,7 +21,7 @@ namespace DealDouble.Web.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+            : base("DealDoubleConnectionString", throwIfV1Schema: false)
         {
         }
 

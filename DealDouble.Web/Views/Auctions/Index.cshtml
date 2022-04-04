@@ -1,0 +1,57 @@
+﻿@model List<DealDouble.Entities.Auction>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>
+                Title
+            </th>
+            <th>
+                Description
+            </th>
+            <th>
+                Amount
+            </th>
+            <th>
+                StartTime
+            </th>
+            <th>
+                EndTime
+            </th>
+            <th>
+                Options
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @item.Title
+            </td>
+            <td>
+                @item.Description
+            </td>
+            <td>
+                @item.ActualAmount
+            </td>
+            <td>
+                @item.StartingTime
+            </td>
+            <td>
+                @item.EndTime
+            </td>
+            <td>
+                <a href="Delete/@item.ID">Delete</a>
+                <a href="Edit/@item.ID">Edit</a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
