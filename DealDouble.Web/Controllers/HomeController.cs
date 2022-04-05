@@ -14,6 +14,8 @@ namespace DealDouble.Web.Controllers
         public ActionResult Index()
         {
             AuctionsViewModel avm = new AuctionsViewModel();
+            avm.PageTitle = "Home";
+            avm.PageDescription = "This is Home page";
             avm.AllAuctions = aucservice.GetAuctions();
             avm.PromotedAuctions = aucservice.GetPromotedAuctions();
             return View(avm);

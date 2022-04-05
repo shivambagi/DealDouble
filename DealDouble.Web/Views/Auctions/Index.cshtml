@@ -1,4 +1,4 @@
-﻿@model IEnumerable<DealDouble.Entities.Auction>
+﻿@model DealDouble.Web.ViewModels.AuctionListingViewModel
 @{
     ViewBag.Title = "Auctions";
 }
@@ -21,7 +21,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var auction in Model)
+                @foreach (var auction in Model.Auctions)
                 {
                     <tr>
                         <td>@auction.Title</td>
