@@ -56,6 +56,10 @@
     <Compile Include="Migrations\202204040546249_AddedAuctionModel.designer.cs">
       <DependentUpon>202204040546249_AddedAuctionModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202204050456428_UpdatedAuctionModel.cs" />
+    <Compile Include="Migrations\202204050456428_UpdatedAuctionModel.designer.cs">
+      <DependentUpon>202204050456428_UpdatedAuctionModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -72,6 +76,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202204040546249_AddedAuctionModel.resx">
       <DependentUpon>202204040546249_AddedAuctionModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202204050456428_UpdatedAuctionModel.resx">
+      <DependentUpon>202204050456428_UpdatedAuctionModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

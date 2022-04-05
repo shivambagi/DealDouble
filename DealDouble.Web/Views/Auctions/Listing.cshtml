@@ -1,0 +1,56 @@
+﻿@model DealDouble.Web.ViewModels.AuctionListingViewModel
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Actual Price</th>
+            <th>Starting Time</th>
+            <th>Ending Time</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var auction in Model.Auctions)
+        {
+            <tr>
+                <td>@auction.Title</td>
+                <td>@auction.Description</td>
+                <td>@auction.ActualPrice</td>
+                <td>@auction.StartingTime.ToShortDateString()</td>
+                <td>@auction.EndingTime.ToShortDateString()</td>
+                <td>
+                    <button data-id="@auction.Id" class="editBtn btn btn-info">Edit</button>
+                    <button data-id="@auction.Id" class="deleteBtn btn btn-danger">Delete</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+@*<script src="~/Scripts/ControllerScripts/Auctions.js"></script>*@
+
+<script>
+    $(".editBtn").click(function () {
+        var id = $(this).attr("data-id");
+        $.ajax({
+            url: '@Url.Action("Edit","Auctions")',
+            method: 'Get',
+            data: {
+                id: id,
+            }
+        })
+        .done(function (response) {
+            $("#formModal").modal("toggle");
+            $("#actionArea").html(response);
+        })
+    });
+
+    $(".deleteBtn").click(function () {
+        debugger;
+        $("#deleteModal").modal("toggle");
+        $("#modalDeleteBtn").attr("data-id", $(this).attr("data-id"));
+    });
+</script>

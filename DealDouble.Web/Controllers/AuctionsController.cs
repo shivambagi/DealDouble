@@ -19,15 +19,23 @@ namespace DealDouble.Web.Controllers
             alvm.PageTitle = "Auction Index";
             alvm.PageDescription = "This is Auction Index page";
             alvm.Auctions = aser.GetAuctions();
-            if(Request.IsAjaxRequest())
-            {
-                return PartialView(alvm);
-            }
-            else
-            {
-                return View(alvm);
-            }
             
+                return View(alvm);
+            
+            
+        }
+
+        public PartialViewResult Listing()
+        {
+            var auctionsModel = new AuctionListingViewModel();
+
+            
+            auctionsModel.PageTitle = "Auctions";
+            auctionsModel.PageDescription = "Auctions listing page.";
+
+            auctionsModel.Auctions = aser.GetAuctions();
+
+            return PartialView(auctionsModel);
         }
 
         [HttpGet]
@@ -40,7 +48,7 @@ namespace DealDouble.Web.Controllers
         public ActionResult Create(Auction auction)
         {
             aser.SaveAuction(auction);
-            return RedirectToAction("Index");
+            return RedirectToAction("Listing");
         }
 
         [HttpGet]
@@ -54,21 +62,14 @@ namespace DealDouble.Web.Controllers
         public ActionResult Edit(Auction auction)
         {
             aser.UpdateAuction(auction);
-            return RedirectToAction("Index");
-        }
-
-        [HttpGet]
-        public ActionResult Delete(int id)
-        {
-            var auction = aser.GetAuction(id);
-            return View(auction);
+            return RedirectToAction("Listing");
         }
 
         [HttpPost]
-        public ActionResult Delete(Auction auction)
+        public ActionResult Delete(int id)
         {
-            aser.DeleteAuction(auction);
-            return RedirectToAction("Index");
+            aser.DeleteAuction(id);
+            return RedirectToAction("Listing");
         }
 
         [HttpGet]

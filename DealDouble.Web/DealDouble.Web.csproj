@@ -263,6 +263,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <None Include="packages.config" />
     <Content Include="Views\Auctions\Details.cshtml" />
+    <Content Include="Views\Auctions\Listing.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DealDouble.Entities\DealDouble.Entities.csproj">

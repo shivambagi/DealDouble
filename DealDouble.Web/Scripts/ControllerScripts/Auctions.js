@@ -1,56 +1,77 @@
-﻿$("#createButton").click(function () {
-    $.ajax({
-        url: "/Auctions/Create",
-        method: "get"
-    }).done(function (response) {
-        $("#actionArea").html(response);
-    })
-});
+﻿////$("#createBtn").click(function () {
+////    $.ajax({
+////        url: '/Auctions/Create',
+////        method: 'Get',
+////    })
+////        .done(function (response) {
+////            $("#formModal").modal("toggle");
+////            $("#actionArea").html(response);
+////        })
+////});
 
-$("#saveButton").click(function () {
-    $.ajax({
-        url: "/Auctions/Create/",
-        method: "post",
-        data: $("#createForm").serialize()
-    }).done(function (response) {
-        $("#listingArea").html(response);
-    })
-});
-
-
-$(".editButton").click(function () {
-    $.ajax({
-        url: "/Auctions/Edit",
-        method: "get",
-        data: { id : $(this).attr('data-id') }
-    }).done(function (response) {
-        $("#actionArea").html(response);
-    })
-});
+////$("#saveBtn").click(function () {
+////    $.ajax({
+////        url: '/Auctions/Create',
+////        type: 'Post',
+////        data: $("#createForm").serialize(),
+////    }).done(function (response) {
+////        $("#formModal").modal("toggle"); //to dismiss modal after finish
+////        $("#listingArea").html(response);
+////    }).fail(function () {
+////        alert("Fail");
+////    });
+////});
 
 
-$("#updateButton").click(function () {
-    $.ajax({
-        url: "/Auctions/Edit/",
-        method: "post",
-        data: $("#editForm").serialize()
-    }).done(function (response) {
-        $("#listingArea").html(response);
-    })
-});
+////$(".editBtn").click(function () {
+////    var id = $(this).attr("data-id");
+////    $.ajax({
+////        url: '/Auctions/Edit',
+////        method: 'Get',
+////        data: {
+////            id: id,
+////        }
+////    })
+////        .done(function (response) {
+////            $("#formModal").modal("toggle");
+////            $("#actionArea").html(response);
+////        })
+////});
 
-$(".deleteButton").click(function () {
-    if (confirm("Are you sure you want delete?")) {
-        $.ajax({
-            url: "/Auctions/Delete",
-            method: "post",
-            data: { id: $(this).attr('data-id') }
-        }).done(function (response) {
-            $("#listingArea").html(response);
-        })
-    }
-    else {
 
-    }
-    
-});
+////$("#updateBtn").click(function () {
+////    $.ajax({
+////        url: '/Auctions/Edit',
+////        method: 'Post',
+////        data: $("#editForm").serialize(),
+////    }).done(function (response) {
+////        $("#formModal").modal("toggle"); //to dismiss modal after finish
+////        $("#listingArea").html(response);
+////    }).fail(function () {
+////        alert("Fail");
+////    });
+////});
+
+////$(".deleteBtn").click(function () {
+////    $("#deleteModal").modal("toggle");
+////    $("#modalDeleteBtn").attr("data-id", $(this).attr("data-id"));
+////});
+
+
+
+////$("#modalDeleteBtn").click(function () {
+////    debugger;
+////    var id = $(this).attr("data-id");
+////    $.ajax({
+////        url: '/Auctions/Delete',
+////        method: 'Post',
+////        data: {
+////            id: id,
+////        }
+////    })
+////        .done(function (response) {
+            
+////            $("#listingArea").html(response);
+////            $("#deleteModal").modal('toggle');
+////        })
+////});

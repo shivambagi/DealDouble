@@ -51,17 +51,21 @@ namespace DealDouble.Services
 
         }
 
-        public void DeleteAuction(Auction auction)
+        public void DeleteAuction(int id)
         {
             //DealDoubleContext context = new DealDoubleContext();
             //context.Auctions.Remove(auction);
             //context.SaveChanges();
 
-            using (DealDoubleContext context = new DealDoubleContext())
-            {
-                context.Entry(auction).State = System.Data.Entity.EntityState.Deleted;
-                context.SaveChanges();
-            }
+            var auction = context.Auctions.Find(id);
+            context.Auctions.Remove(auction);
+            context.SaveChanges();
+
+            //using (DealDoubleContext context = new DealDoubleContext())
+            //{
+            //    context.Entry(auction).State = System.Data.Entity.EntityState.Deleted;
+            //    context.SaveChanges();
+            //}
 
         }
     }
