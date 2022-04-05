@@ -50,6 +50,10 @@
 
 @*<script src="~/Scripts/ControllerScripts/Auctions.js"></script>*@
 
+<div id="picTemplate" style="display:none">
+    <img src="" class="image img-thumbnail" data-id="" />
+</div>
+
 <script>
     $("#createBtn").click(function () {
         $.ajax({
@@ -78,4 +82,13 @@
                 $("#deleteModal").modal('toggle');
             })
     });
+
+    function RemoveImageOnClick() {
+        $("#picturesArea .image").click(function () {
+            debugger;
+
+            $(this).remove();
+
+        })
+    }
 </script>

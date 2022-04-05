@@ -12,6 +12,7 @@ namespace DealDouble.Web.Controllers
     public class AuctionsController : Controller
     {
         AuctionService aser = new AuctionService();
+        CategoryService cser = new CategoryService();
         [HttpGet]
         public ActionResult Index()
         {
@@ -41,7 +42,9 @@ namespace DealDouble.Web.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            return PartialView();
+            CreateAuctionViewModel model = new CreateAuctionViewModel();
+            model.Categories = cser.GetCategories();
+            return PartialView(model);
         }
 
         [HttpPost]
@@ -49,6 +52,7 @@ namespace DealDouble.Web.Controllers
         {
             Auction auction = new Auction();
             auction.Title = model.Title;
+            auction.CategoryID = model.CategoryID;
             auction.Description = model.Description;
             auction.ActualPrice = model.ActualPrice;
             auction.StartingTime = model.StartingTime;
@@ -97,8 +101,11 @@ namespace DealDouble.Web.Controllers
         [HttpGet]
         public ActionResult Details(int id)
         {
-            var auction = aser.GetAuction(id);
-            return View(auction);
+            AuctionDetailsViewModel model = new AuctionDetailsViewModel();
+            model.Auction = aser.GetAuction(id);
+            model.PageTitle = model.Auction.Title + "Details";
+            model.PageDescription = model.Auction.Description;
+            return View(model);
         }
     }
 }

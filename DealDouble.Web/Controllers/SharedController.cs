@@ -29,10 +29,11 @@ namespace DealDouble.Web.Controllers
 
                 var path = Server.MapPath("~/Content/images/") + fileName;
 
+                var picUrl = "/Content/images/" + fileName;
                 picture.SaveAs(path);
                 
                 var dbPicture = new Picture();
-                dbPicture.URL = path;
+                dbPicture.URL = picUrl;
 
                 int pictureID = sser.SavePicture(dbPicture);
                 picturesJSON.Add(new { ID = pictureID, pictureURL = fileName });
