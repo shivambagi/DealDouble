@@ -14,27 +14,49 @@ namespace DealDouble.Web.Controllers
         AuctionService aser = new AuctionService();
         CategoryService cser = new CategoryService();
         [HttpGet]
-        public ActionResult Index()
+        public ActionResult Index(int? categoryId, string searchTerm, int? pageNo)
         {
             AuctionListingViewModel alvm = new AuctionListingViewModel();
             alvm.PageTitle = "Auction Index";
             alvm.PageDescription = "This is Auction Index page";
-            alvm.Auctions = aser.GetAuctions();
+            
+            alvm.CategoryId = categoryId;
+            alvm.SearchTerm = searchTerm;
+            alvm.PageNo = pageNo;
+
+            alvm.Categories = cser.GetCategories();
 
             return View(alvm);
 
 
         }
 
-        public PartialViewResult Listing()
+        public PartialViewResult Listing(int? categoryId, string searchTerm, int? pageNo)
         {
+            var pageSize = 4;
+
             var auctionsModel = new AuctionListingViewModel();
 
 
             auctionsModel.PageTitle = "Auctions";
             auctionsModel.PageDescription = "Auctions listing page.";
 
-            auctionsModel.Auctions = aser.GetAuctions();
+            //auctionsModel.Auctions = aser.GetAuctions();
+
+            auctionsModel.Auctions = aser.FilterAuctions(categoryId, searchTerm, pageNo, pageSize);
+
+            int totalAuctions;
+
+            if (categoryId != null || searchTerm != null || pageNo != null)
+            {
+                totalAuctions = auctionsModel.Auctions.Count();  //aser.GetAuctionsCount();
+            }
+            else
+            {
+                totalAuctions = aser.GetAuctionsCount();
+            }
+
+            auctionsModel.Pager = new Pager(totalAuctions, pageNo, pageSize);
 
             return PartialView(auctionsModel);
         }
