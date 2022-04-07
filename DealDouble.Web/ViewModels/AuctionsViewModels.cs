@@ -34,7 +34,7 @@ namespace DealDouble.Web.ViewModels
     {
         public int ID { get; set; }
         public int CategoryID { get; set; }
-        [Required, MinLength(10), MaxLength(150)]
+        [Required, MinLength(4), MaxLength(150)]
         public string Title { get; set; }
 
         public string Description { get; set; }

@@ -75,6 +75,39 @@
 
 <script>
 
+    var d = new Date();
+    var month = d.getMonth() + 1;
+    var day = d.getDate();
+
+    var currentDate = (month < 10 ? '0' : '') + month + '/' + (day < 10 ? '0' : '') + day + '/' + d.getFullYear();
+
+    $('input[name="StartingTime"]').daterangepicker({
+        singleDatePicker: true,
+        showDropdowns: true,
+        drops: 'up',
+        minDate: currentDate,
+        timePicker: true,
+        minYear: parseInt(moment().format('YYYY')),
+        maxYear: parseInt(moment().format('YYYY'), 11),
+        locale: {
+            format: 'M/DD/YYYY hh:mm A',
+        }
+    });
+
+    $('input[name="EndingTime"]').daterangepicker({
+        singleDatePicker: true,
+        showDropdowns: true,
+        drops: 'up',
+        minDate: currentDate,
+        timePicker: true,
+        minYear: parseInt(moment().format('YYYY')),
+        maxYear: parseInt(moment().format('YYYY'), 11),
+        locale: {
+            format: 'M/DD/YYYY hh:mm A',
+        }
+    });
+
+
     @* validate form *@
     $("#editForm").validate({
         rules: {
@@ -121,8 +154,16 @@
                 method: 'Post',
                 data: $("#editForm").serialize(),
             }).done(function (response) {
-                $("#formModal").modal("toggle"); //to dismiss modal after finish
-                $("#listingArea").html(response);
+                //$("#formModal").modal("toggle"); //to dismiss modal after finish
+                //$("#listingArea").html(response);
+
+                if (response.success) {
+                    ReloadListing();
+                    $("#formModal").modal("toggle"); //to dismiss modal after finish
+                } else {
+                    $("#divError").html(response.message);
+                    $("#divError").show();
+                }
             }).fail(function () {
                 alert("Fail");
             });

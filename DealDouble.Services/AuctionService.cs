@@ -2,6 +2,7 @@
 using DealDouble.Entities;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -43,11 +44,22 @@ namespace DealDouble.Services
             //original.EndTime = auction.EndTime;
             //context.SaveChanges();
 
-            using (DealDoubleContext context = new DealDoubleContext())
-            {
-                context.Entry(auction).State = System.Data.Entity.EntityState.Modified;
+            //using (DealDoubleContext context = new DealDoubleContext())
+            //{
+                //context.Entry(auction).State = System.Data.Entity.EntityState.Modified;
+
+                var context = new DealDoubleContext();
+
+                var existingAuction = context.Auctions.Find(auction.Id);
+
+                context.AuctionPictures.RemoveRange(existingAuction.AuctionPictures); //delete existing pics 
+
+                context.Entry(existingAuction).CurrentValues.SetValues(auction); //update all old values to newest except : navigation objects like pics
+
+                context.AuctionPictures.AddRange(auction.AuctionPictures); //add new pics
+
                 context.SaveChanges();
-            }
+            //}
 
         }
 
@@ -93,11 +105,23 @@ namespace DealDouble.Services
             return auction.OrderByDescending(a => a.Id).Skip(skipCount).Take(pageSize).ToList();
         }
 
-        public int GetAuctionsCount()
+        public int GetAuctionsCount(int? categoryId, string searchTerm)
         {
             var context = new DealDoubleContext();
 
-            return context.Auctions.Count();
+            var auction = context.Auctions.Include("Category").AsQueryable();
+
+            if (categoryId.HasValue && categoryId.Value > 0)
+            {
+                auction = auction.Where(x => x.CategoryID == categoryId.Value);
+            }
+
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                auction = auction.Where(x => x.Title.ToLower().Contains(searchTerm.ToLower()));
+            }
+
+            return auction.Count();
         }
     }
 }

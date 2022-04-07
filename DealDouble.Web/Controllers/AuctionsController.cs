@@ -14,13 +14,13 @@ namespace DealDouble.Web.Controllers
         AuctionService aser = new AuctionService();
         CategoryService cser = new CategoryService();
         [HttpGet]
-        public ActionResult Index(int? categoryId, string searchTerm, int? pageNo)
+        public ActionResult Index(int? categoryID, string searchTerm, int? pageNo)
         {
             AuctionListingViewModel alvm = new AuctionListingViewModel();
             alvm.PageTitle = "Auction Index";
             alvm.PageDescription = "This is Auction Index page";
             
-            alvm.CategoryId = categoryId;
+            alvm.CategoryId = categoryID;
             alvm.SearchTerm = searchTerm;
             alvm.PageNo = pageNo;
 
@@ -31,7 +31,7 @@ namespace DealDouble.Web.Controllers
 
         }
 
-        public PartialViewResult Listing(int? categoryId, string searchTerm, int? pageNo)
+        public PartialViewResult Listing(int? categoryID, string searchTerm, int? pageNo)
         {
             var pageSize = 4;
 
@@ -43,18 +43,11 @@ namespace DealDouble.Web.Controllers
 
             //auctionsModel.Auctions = aser.GetAuctions();
 
-            auctionsModel.Auctions = aser.FilterAuctions(categoryId, searchTerm, pageNo, pageSize);
+            auctionsModel.Auctions = aser.FilterAuctions(categoryID, searchTerm, pageNo, pageSize);
 
             int totalAuctions;
-
-            if (categoryId != null || searchTerm != null)
-            {
-                totalAuctions = auctionsModel.Auctions.Count();  //aser.GetAuctionsCount();
-            }
-            else
-            {
-                totalAuctions = aser.GetAuctionsCount();
-            }
+                       
+            totalAuctions = aser.GetAuctionsCount(categoryID, searchTerm);
 
             auctionsModel.Pager = new Pager(totalAuctions, pageNo, pageSize);
 
@@ -151,15 +144,17 @@ namespace DealDouble.Web.Controllers
                 auction.EndingTime = model.EndingTime;
                 auction.CategoryID = model.CategoryID;
 
-                //there's a BUG here (update auction pictures)
-                //check if we have aictionpictureIds back from form  
+                //check if we have auctionPictureIds back from form  
                 if (!String.IsNullOrEmpty(model.AuctionPictures))
                 {
-                    var pictureIDs = model.AuctionPictures.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
-                                .Select(ID => int.Parse(ID)).ToList();
+                    var pictureIds = model.AuctionPictures.Split(',').Select(int.Parse);
 
-                    auction.AuctionPictures = new List<AuctionPicture>();
-                    auction.AuctionPictures.AddRange(pictureIDs.Select(x => new AuctionPicture() { AuctionID = auction.Id, PictureID = x }));
+                    auction.AuctionPictures = new List<AuctionPicture>(); //empty auctionPicture object before modified
+                    auction.AuctionPictures.AddRange(pictureIds.Select(pi => new AuctionPicture()
+                    {
+                        PictureID = pi,
+                        AuctionID = auction.Id //prevent create new auction
+                    }).ToList());
                 }
 
                 aser.UpdateAuction(auction);
