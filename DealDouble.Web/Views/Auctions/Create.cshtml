@@ -46,7 +46,7 @@
         <div class="form-group">
             <label for="EndingTime">Select Pictures</label>
             <input type="file" class="form-control" name="AuctionPictures" id="AuctionPictures" multiple />
-            <div id="picturesArea">
+            <div id="picturesArea" class="mt-2">
 
             </div>
             <input type="hidden" name="AuctionPictures" id="pictureIDs" />
@@ -122,17 +122,4 @@
         });
     })
 
-
-    //clone image template html to every added image 
-    function AttachNewImage(imgId, imgUrl) {
-        debugger;
-        var imgHtml = $("#picTemplate").clone();
-
-        imgHtml.find('.image').attr('data-id', imgId);
-        imgHtml.find('.image').attr('src', imgUrl);
-
-        $("#picturesArea").append(imgHtml.html());
-
-        RemoveImageOnClick();
-    }
 </script>

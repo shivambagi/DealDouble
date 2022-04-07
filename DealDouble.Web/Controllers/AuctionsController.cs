@@ -20,17 +20,17 @@ namespace DealDouble.Web.Controllers
             alvm.PageTitle = "Auction Index";
             alvm.PageDescription = "This is Auction Index page";
             alvm.Auctions = aser.GetAuctions();
-            
-                return View(alvm);
-            
-            
+
+            return View(alvm);
+
+
         }
 
         public PartialViewResult Listing()
         {
             var auctionsModel = new AuctionListingViewModel();
 
-            
+
             auctionsModel.PageTitle = "Auctions";
             auctionsModel.PageDescription = "Auctions listing page.";
 
@@ -58,11 +58,15 @@ namespace DealDouble.Web.Controllers
             auction.StartingTime = model.StartingTime;
             auction.EndingTime = model.EndingTime;
 
-            var pictureIDs = model.AuctionPictures.Split(new char[] { ',' },StringSplitOptions.RemoveEmptyEntries)
+            if (!String.IsNullOrEmpty(model.AuctionPictures))
+            {
+
+                var pictureIDs = model.AuctionPictures.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
                             .Select(ID => int.Parse(ID)).ToList();
 
-            auction.AuctionPictures = new List<AuctionPicture>();
-            auction.AuctionPictures.AddRange(pictureIDs.Select(x => new AuctionPicture() { PictureID = x }));
+                auction.AuctionPictures = new List<AuctionPicture>();
+                auction.AuctionPictures.AddRange(pictureIDs.Select(x => new AuctionPicture() { PictureID = x }));
+            }
 
             #region Same functionality for adding auction pictures
             /*foreach (var picId in pictureIds)
@@ -80,13 +84,45 @@ namespace DealDouble.Web.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
+            CreateAuctionViewModel model = new CreateAuctionViewModel();
             var auction = aser.GetAuction(id);
-            return PartialView(auction);
+            model.ID = auction.Id;
+            model.Title = auction.Title;
+            model.CategoryID = auction.CategoryID;
+            model.Description = auction.Description;
+            model.ActualPrice = auction.ActualPrice;
+            model.StartingTime = auction.StartingTime;
+            model.EndingTime = auction.EndingTime;
+            model.AuctionPicturesList = auction.AuctionPictures;
+
+            model.Categories = cser.GetCategories();
+
+            return PartialView(model);
         }
 
         [HttpPost]
-        public ActionResult Edit(Auction auction)
+        public ActionResult Edit(CreateAuctionViewModel model)
         {
+            Auction auction = new Auction();
+            auction.Id = model.ID;
+            auction.Title = model.Title;
+            auction.Description = model.Description;
+            auction.ActualPrice = model.ActualPrice;
+            auction.StartingTime = model.StartingTime;
+            auction.EndingTime = model.EndingTime;
+            auction.CategoryID = model.CategoryID;
+
+            //there's a BUG here (update auction pictures)
+            //check if we have aictionpictureIds back from form  
+            if (!String.IsNullOrEmpty(model.AuctionPictures))
+            {
+                var pictureIDs = model.AuctionPictures.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                            .Select(ID => int.Parse(ID)).ToList();
+
+                auction.AuctionPictures = new List<AuctionPicture>();
+                auction.AuctionPictures.AddRange(pictureIDs.Select(x => new AuctionPicture() { AuctionID = auction.Id ,PictureID = x }));
+            }
+
             aser.UpdateAuction(auction);
             return RedirectToAction("Listing");
         }

@@ -1,0 +1,57 @@
+﻿@model DealDouble.Web.ViewModels.CategoriesListingViewModel
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Auctions</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var category in Model.Categories)
+        {
+        <tr>
+            <td>@category.Name</td>
+            <td>@category.Description</td>
+            @if (category.Auctions != null && category.Auctions.Count() > 0)
+            {
+                <td>@category.Auctions.Count()</td>
+            }
+            else
+            {
+                <td>0</td>
+            }
+            <td>
+                <button data-id="@category.Id" class="editBtn btn btn-info" data-toggle="modal" data-target="#formModal">Edit</button>
+                <button data-id="@category.Id" class="deleteBtn btn btn-danger" data-toggle="modal" data-target="#deleteModal">Delete</button>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+
+
+<script>
+    $(".editBtn").click(function () {
+        var id = $(this).attr("data-id");
+        $.ajax({
+            url: '@Url.Action("Edit", "Categories")',
+            method: 'Get',
+            data: {
+                id: id,
+            }
+        })
+        .done(function (response) {            
+            $("#actionArea").html(response);
+            $("#formModal").modal("toggle");
+        })
+    });
+
+    $(".deleteBtn").click(function () {
+        debugger;        
+        $("#modalDeleteBtn").attr("data-id", $(this).attr("data-id"));
+        $("#deleteModal").modal("toggle");
+    });
+</script>
