@@ -54,11 +54,13 @@
                 {
                     foreach (var picture in Model.AuctionPicturesList)
                     {
-                        <img src="@picture.Picture.URL" class="image img-thumbnail" data-id="@picture.Id" style="width:230px;"/>
+                        <img src="@picture.Picture.URL" class="image img-thumbnail" data-id="@picture.Id" style="width:230px;" />
                     }
                 }
             </div>
             <input type="hidden" name="AuctionPictures" id="pictureIDs" />
+        </div>
+        <div id="divError" class="form-group alert alert-danger" style="display:none;">
         </div>
     </div>
 
@@ -72,30 +74,59 @@
 @*<script src="~/Scripts/ControllerScripts/Auctions.js"></script>*@
 
 <script>
+
+    @* validate form *@
+    $("#editForm").validate({
+        rules: {
+            Title: {
+                required: true,
+                minlength: 4,
+                maxlength: 150
+            },
+            ActualPrice: {
+                required: true,
+                range: [1, 1000000]
+            }
+        },
+        messages: {
+            Title: {
+                required: "Title is rquired.",
+                minlength: "Minmum length is 4",
+                maxlength: "Maximum length is 150"
+            },
+            ActualPrice: {
+                required: "Actual price is required.",
+                range: "Invalid price."
+            }
+        },
+        errorClass: "text-danger"
+    })
+
     RemoveImageOnClick();
 
     $("#updateBtn").click(function () {
+        if ($("#editForm").valid()) {
+            var picIds = [];
 
-        var picIds = [];
+            $("#picturesArea .image").each(function () {
+                var picId = $(this).attr("data-id");
 
-        $("#picturesArea .image").each(function () {
-            var picId = $(this).attr("data-id");
+                picIds.push(picId);
+            })
 
-            picIds.push(picId);
-        })
+            $("#pictureIDs").val(picIds);
 
-        $("#pictureIDs").val(picIds);
-
-        $.ajax({
-            url: '/Auctions/Edit',
-            method: 'Post',
-            data: $("#editForm").serialize(),
-        }).done(function (response) {
-            $("#formModal").modal("toggle"); //to dismiss modal after finish
-            $("#listingArea").html(response);
-        }).fail(function () {
-            alert("Fail");
-        });
+            $.ajax({
+                url: '/Auctions/Edit',
+                method: 'Post',
+                data: $("#editForm").serialize(),
+            }).done(function (response) {
+                $("#formModal").modal("toggle"); //to dismiss modal after finish
+                $("#listingArea").html(response);
+            }).fail(function () {
+                alert("Fail");
+            });
+        }
     });
 
     $("#AuctionPictures").change(function () {

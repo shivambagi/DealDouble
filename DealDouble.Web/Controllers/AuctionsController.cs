@@ -47,7 +47,7 @@ namespace DealDouble.Web.Controllers
 
             int totalAuctions;
 
-            if (categoryId != null || searchTerm != null || pageNo != null)
+            if (categoryId != null || searchTerm != null)
             {
                 totalAuctions = auctionsModel.Auctions.Count();  //aser.GetAuctionsCount();
             }
@@ -72,40 +72,53 @@ namespace DealDouble.Web.Controllers
         [HttpPost]
         public ActionResult Create(CreateAuctionViewModel model)
         {
-            Auction auction = new Auction();
-            auction.Title = model.Title;
-            auction.CategoryID = model.CategoryID;
-            auction.Description = model.Description;
-            auction.ActualPrice = model.ActualPrice;
-            auction.StartingTime = model.StartingTime;
-            auction.EndingTime = model.EndingTime;
+            JsonResult result = new JsonResult();
 
-            if (!String.IsNullOrEmpty(model.AuctionPictures))
+            if (ModelState.IsValid)
             {
+                Auction auction = new Auction();
+                auction.Title = model.Title;
+                auction.CategoryID = model.CategoryID;
+                auction.Description = model.Description;
+                auction.ActualPrice = model.ActualPrice;
+                auction.StartingTime = model.StartingTime;
+                auction.EndingTime = model.EndingTime;
 
-                var pictureIDs = model.AuctionPictures.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
-                            .Select(ID => int.Parse(ID)).ToList();
+                if (!String.IsNullOrEmpty(model.AuctionPictures))
+                {
 
-                auction.AuctionPictures = new List<AuctionPicture>();
-                auction.AuctionPictures.AddRange(pictureIDs.Select(x => new AuctionPicture() { PictureID = x }));
+                    var pictureIDs = model.AuctionPictures.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                                .Select(ID => int.Parse(ID)).ToList();
+
+                    auction.AuctionPictures = new List<AuctionPicture>();
+                    auction.AuctionPictures.AddRange(pictureIDs.Select(x => new AuctionPicture() { PictureID = x }));
+                }
+
+                #region Same functionality for adding auction pictures
+                /*foreach (var picId in pictureIds)
+                {
+                    var auctionPicture = new AuctionPicture();
+                    auctionPicture.PictureId = picId;
+                    newAuction.AuctionPictures.Add(auctionPicture);
+                } */
+                #endregion
+
+                aser.SaveAuction(auction);
+
+                result.Data = new { success = true };
+            }
+            else
+            {
+                result.Data = new { success = false, message = "Invalid inputs." };
             }
 
-            #region Same functionality for adding auction pictures
-            /*foreach (var picId in pictureIds)
-            {
-                var auctionPicture = new AuctionPicture();
-                auctionPicture.PictureId = picId;
-                newAuction.AuctionPictures.Add(auctionPicture);
-            } */
-            #endregion
-
-            aser.SaveAuction(auction);
-            return RedirectToAction("Listing");
+            return result;
         }
 
         [HttpGet]
         public ActionResult Edit(int id)
         {
+
             CreateAuctionViewModel model = new CreateAuctionViewModel();
             var auction = aser.GetAuction(id);
             model.ID = auction.Id;
@@ -125,28 +138,40 @@ namespace DealDouble.Web.Controllers
         [HttpPost]
         public ActionResult Edit(CreateAuctionViewModel model)
         {
-            Auction auction = new Auction();
-            auction.Id = model.ID;
-            auction.Title = model.Title;
-            auction.Description = model.Description;
-            auction.ActualPrice = model.ActualPrice;
-            auction.StartingTime = model.StartingTime;
-            auction.EndingTime = model.EndingTime;
-            auction.CategoryID = model.CategoryID;
+            JsonResult result = new JsonResult();
 
-            //there's a BUG here (update auction pictures)
-            //check if we have aictionpictureIds back from form  
-            if (!String.IsNullOrEmpty(model.AuctionPictures))
+            if (ModelState.IsValid)
             {
-                var pictureIDs = model.AuctionPictures.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
-                            .Select(ID => int.Parse(ID)).ToList();
+                Auction auction = new Auction();
+                auction.Id = model.ID;
+                auction.Title = model.Title;
+                auction.Description = model.Description;
+                auction.ActualPrice = model.ActualPrice;
+                auction.StartingTime = model.StartingTime;
+                auction.EndingTime = model.EndingTime;
+                auction.CategoryID = model.CategoryID;
 
-                auction.AuctionPictures = new List<AuctionPicture>();
-                auction.AuctionPictures.AddRange(pictureIDs.Select(x => new AuctionPicture() { AuctionID = auction.Id ,PictureID = x }));
+                //there's a BUG here (update auction pictures)
+                //check if we have aictionpictureIds back from form  
+                if (!String.IsNullOrEmpty(model.AuctionPictures))
+                {
+                    var pictureIDs = model.AuctionPictures.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                                .Select(ID => int.Parse(ID)).ToList();
+
+                    auction.AuctionPictures = new List<AuctionPicture>();
+                    auction.AuctionPictures.AddRange(pictureIDs.Select(x => new AuctionPicture() { AuctionID = auction.Id, PictureID = x }));
+                }
+
+                aser.UpdateAuction(auction);
+
+                result.Data = new { success = true };
+            }
+            else
+            {
+                result.Data = new { success = false, message = "Invalid inputs." };
             }
 
-            aser.UpdateAuction(auction);
-            return RedirectToAction("Listing");
+            return result;
         }
 
         [HttpPost]

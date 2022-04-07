@@ -21,7 +21,7 @@
                 {
                     <option value="@category.Id">@category.Name</option>
                 }
-            </select>            
+            </select>
         </div>
 
         <div class="form-group">
@@ -43,13 +43,16 @@
             <label for="EndingTime">Ending Time</label>
             <input type="text" class="form-control" name="EndingTime" id="EndingTime" />
         </div>
+
         <div class="form-group">
-            <label for="EndingTime">Select Pictures</label>
+            <label>Select Pictures</label>
             <input type="file" class="form-control" name="AuctionPictures" id="AuctionPictures" multiple />
             <div id="picturesArea" class="mt-2">
 
             </div>
             <input type="hidden" name="AuctionPictures" id="pictureIDs" />
+        </div>
+        <div id="divError" class="form-group alert alert-danger" style="display:none;">
         </div>
     </div>
     <div class="modal-footer">
@@ -62,28 +65,69 @@
 
 
 <script>
+
+    @* validate form *@
+    $("#createForm").validate({
+        rules: {
+            Title: {
+                required: true,
+                minlength: 14,
+                maxlength: 150
+            },
+            ActualPrice: {
+                required: true,
+                range: [1, 1000000]
+            }
+        },
+        messages: {
+            Title: {
+                required: "Title is rquired.",
+                minlength: "Minmum length is 14",
+                maxlength: "Maximum length is 150"
+            },
+            ActualPrice: {
+                required: "Actual price is required.",
+                range: "Invalid price."
+            }
+        },
+        errorClass: "text-danger"
+    })
+
+
     $("#saveBtn").click(function () {
-        debugger;
-        var picIds = [];
+        if ($("#createForm").valid()) {
+            debugger;
+            var picIds = [];
 
-        $("#picturesArea .image").each(function () {
-            var picId = $(this).attr("data-id");
+            $("#picturesArea .image").each(function () {
+                var picId = $(this).attr("data-id");
 
-            picIds.push(picId);
-        })
+                picIds.push(picId);
+            })
 
-        $("#pictureIDs").val(picIds);
+            $("#pictureIDs").val(picIds);
 
-        $.ajax({
-            url: '/Auctions/Create',
-            type: 'Post',
-            data: $("#createForm").serialize(),
-        }).done(function (response) {
-            $("#formModal").modal("toggle"); //to dismiss modal after finish
-            $("#listingArea").html(response);
-        }).fail(function () {
-            alert("Fail");
-        });
+            $.ajax({
+                url: '/Auctions/Create',
+                type: 'Post',
+                data: $("#createForm").serialize(),
+            }).done(function (response) {
+                //$("#formModal").modal("toggle"); //to dismiss modal after finish
+                //$("#listingArea").html(response);
+
+                debugger;
+                if (response.success) {
+                    ReloadListing();
+                    $("#formModal").modal("toggle"); //to dismiss modal after finish
+                } else {
+                    $("#divError").html(response.message);
+                    $("#divError").show();
+                }
+
+            }).fail(function () {
+                alert("Fail");
+            });
+        }
     })
 
     $("#AuctionPictures").change(function () {

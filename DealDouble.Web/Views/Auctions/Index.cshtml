@@ -122,7 +122,7 @@
         })
     }
 
-    //clone image template html to every added image 
+    //clone image template html to every added image
     function AttachNewImage(imgId, imgUrl) {
         debugger;
         var imgHtml = $("#picTemplate").clone();
@@ -133,5 +133,15 @@
         $("#picturesArea").append(imgHtml.html());
 
         RemoveImageOnClick();
+    }
+
+    function ReloadListing() {
+        $.ajax({
+            url: '@Url.Action("Listing","Auctions")',
+            method: 'Get',
+        })
+        .done(function (response) {
+            $("#listingArea").html(response);
+        })
     }
 </script>
