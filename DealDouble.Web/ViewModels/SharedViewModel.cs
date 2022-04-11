@@ -9,7 +9,7 @@ namespace DealDouble.Web.ViewModels
     public class CommentViewModel
     {
         public string Body { get; set; }
-
+        public int Rating { get; set; }
         public int EntityId { get; set; } //Auctions || Blogs tables 
         public int RecordId { get; set; } //auctionId, postId
     }

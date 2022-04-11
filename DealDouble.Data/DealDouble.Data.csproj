@@ -93,6 +93,10 @@
     <Compile Include="Migrations\202204111306580_comment_model_added.Designer.cs">
       <DependentUpon>202204111306580_comment_model_added.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202204111654082_rating_field_Comment_int_added.cs" />
+    <Compile Include="Migrations\202204111654082_rating_field_Comment_int_added.Designer.cs">
+      <DependentUpon>202204111654082_rating_field_Comment_int_added.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -133,6 +137,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202204111306580_comment_model_added.resx">
       <DependentUpon>202204111306580_comment_model_added.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202204111654082_rating_field_Comment_int_added.resx">
+      <DependentUpon>202204111654082_rating_field_Comment_int_added.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

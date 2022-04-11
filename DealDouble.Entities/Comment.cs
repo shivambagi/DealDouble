@@ -11,6 +11,7 @@ namespace DealDouble.Entities
     {
         public string Body { get; set; }
 
+        public int Rating { get; set; }
         public DateTime Timestamp { get; set; }
 
         //nav props 
