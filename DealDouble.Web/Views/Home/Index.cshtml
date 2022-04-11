@@ -72,7 +72,10 @@
                                 <a href="@Url.Action("Details", "Auctions", new { id = auction.Id})">@auction.Title</a>
                             </h4>
                             <h5>$@auction.ActualPrice</h5>
-                            <p class="card-text">@auction.Description</p>
+                            @if (auction.Description != null)
+                            {
+                                <p class="card-text">@auction.Description</p>
+                            }
                         </div>
                         <div class="card-footer">
                             <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>

@@ -1,5 +1,7 @@
 ﻿using DealDouble.Entities;
 using DealDouble.Services;
+using DealDouble.Web.ViewModels;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,7 +13,7 @@ namespace DealDouble.Web.Controllers
 {
     public class SharedController : Controller
     {
-        SharedService sser = new SharedService();
+        SharedService service = new SharedService();
 
         List<object> picturesJSON = new List<object>();
 
@@ -35,11 +37,39 @@ namespace DealDouble.Web.Controllers
                 var dbPicture = new Picture();
                 dbPicture.URL = picUrl;
 
-                int pictureID = sser.SavePicture(dbPicture);
+                int pictureID = service.SavePicture(dbPicture);
                 picturesJSON.Add(new { ID = pictureID, pictureURL = fileName });
             }
 
             result.Data = picturesJSON;
+            return result;
+        }
+
+        [HttpPost]
+        public JsonResult LeaveComment(CommentViewModel model)
+        {
+            JsonResult result = new JsonResult();
+            result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+
+            if (User.Identity.IsAuthenticated)
+            {
+                var comment = new Comment();
+
+                comment.Body = model.Body;
+                comment.EntityId = model.EntityId;
+                comment.RecordId = model.RecordId;
+                comment.UserId = User.Identity.GetUserId();
+                comment.Timestamp = DateTime.Now;
+
+                var commentResult = service.LeaveComment(comment);
+
+                result.Data = new { success = true };
+            }
+            else
+            {
+                result.Data = new { success = false, message = "Please Login to proceed" };
+            }
+
             return result;
         }
     }

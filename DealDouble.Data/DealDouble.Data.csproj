@@ -89,6 +89,10 @@
     <Compile Include="Migrations\202204111105186_bid_model_changed.Designer.cs">
       <DependentUpon>202204111105186_bid_model_changed.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202204111306580_comment_model_added.cs" />
+    <Compile Include="Migrations\202204111306580_comment_model_added.Designer.cs">
+      <DependentUpon>202204111306580_comment_model_added.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -126,6 +130,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202204111105186_bid_model_changed.resx">
       <DependentUpon>202204111105186_bid_model_changed.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202204111306580_comment_model_added.resx">
+      <DependentUpon>202204111306580_comment_model_added.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
