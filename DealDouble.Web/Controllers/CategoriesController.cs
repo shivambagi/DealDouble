@@ -91,7 +91,8 @@ namespace DealDouble.Web.Controllers
             CategoryDetailsViewModel model = new CategoryDetailsViewModel();
             model.Category = cser.GetCategory(id);
             model.PageTitle = model.Category.Name + " Details";
-            model.PageDescription = model.Category.Description;
+            model.PageDescription = model.Category.Description != null ? (model.Category.Description.Length > 10 ? model.Category.Description.Substring(0, 10) : model.Category.Description) : "Category details.";
+
             return View(model);
         }
     }

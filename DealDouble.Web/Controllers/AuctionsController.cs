@@ -181,8 +181,15 @@ namespace DealDouble.Web.Controllers
         {
             AuctionDetailsViewModel model = new AuctionDetailsViewModel();
             model.Auction = aser.GetAuction(id);
-            model.PageTitle = model.Auction.Title + "Details";
-            model.PageDescription = model.Auction.Description;
+            model.PageTitle = model.Auction.Title + "Details";            
+            model.PageDescription = model.Auction.Description != null ? (model.Auction.Description.Length > 10 ? model.Auction.Description.Substring(0, 10) : model.Auction.Description) : "Auction Details.";
+
+            var latestBidder = model.Auction.Bids.OrderByDescending(b => b.Timestamp).FirstOrDefault();
+
+            model.LatestBidder = latestBidder != null ? latestBidder.User : null;
+
+            model.BidsAmount = model.Auction.ActualPrice + model.Auction.Bids.Sum(x => x.BidAmount);
+
             return View(model);
         }
     }

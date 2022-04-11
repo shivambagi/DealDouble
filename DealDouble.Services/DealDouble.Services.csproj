@@ -78,6 +78,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BidsService.cs" />
     <Compile Include="CategoryService.cs" />
     <Compile Include="AuctionService.cs" />
     <Compile Include="DealDoubleSignInManager.cs" />

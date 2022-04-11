@@ -81,6 +81,14 @@
     <Compile Include="Migrations\202204111014488_identity_Models_changed.Designer.cs">
       <DependentUpon>202204111014488_identity_Models_changed.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202204111032560_bid_model_added.cs" />
+    <Compile Include="Migrations\202204111032560_bid_model_added.Designer.cs">
+      <DependentUpon>202204111032560_bid_model_added.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202204111105186_bid_model_changed.cs" />
+    <Compile Include="Migrations\202204111105186_bid_model_changed.Designer.cs">
+      <DependentUpon>202204111105186_bid_model_changed.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -112,6 +120,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202204111014488_identity_Models_changed.resx">
       <DependentUpon>202204111014488_identity_Models_changed.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202204111032560_bid_model_added.resx">
+      <DependentUpon>202204111032560_bid_model_added.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202204111105186_bid_model_changed.resx">
+      <DependentUpon>202204111105186_bid_model_changed.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

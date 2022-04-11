@@ -15,7 +15,9 @@ namespace DealDouble.Services
 
         public Auction GetAuction(int id)
         {
-            return context.Auctions.Find(id);
+            return context.Auctions.Include(a => a.AuctionPictures).Include("AuctionPictures.Picture")
+                .Include(a => a.Bids).Include("Bids.User")
+                .Where(a => a.Id == id).First();
         }
         public List<Auction> GetAuctions()
         {

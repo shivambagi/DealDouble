@@ -22,5 +22,7 @@ namespace DealDouble.Entities
 
         public virtual List<AuctionPicture> AuctionPictures { get; set; }
 
+        public virtual List<Bid> Bids { get; set; }
+
     }
 }
