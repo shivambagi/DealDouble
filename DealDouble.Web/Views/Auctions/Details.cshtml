@@ -44,6 +44,17 @@
 
             }
             <div class="card-body">
+                <span class="text-warning float-right">
+                    @{ int? avgdefaultStars = 5 - Model.AverageRate; }
+                    @for (int i = 0; i < Model.AverageRate; i++)
+                    {
+                        <i class="fas fa-star"></i>
+                    }
+                    @for (int i = 0; i < avgdefaultStars; i++)
+                    {
+                        <i class="far fa-star"></i>
+                    }
+                </span>
                 <h3 class="card-title">@Model.Auction.Title</h3>
                 <h4>
                     $@Model.BidsAmount
@@ -53,8 +64,7 @@
                     }
                 </h4>
                 <p class="card-text">@Model.Auction.Description</p>
-                <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
-                4.0 stars
+               
             </div>
             <div class="card-footer text-muted">
                 <button id="bidBtn" type="button" class="btn btn-primary">Bid now</button>

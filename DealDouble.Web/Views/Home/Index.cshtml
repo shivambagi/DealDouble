@@ -51,7 +51,22 @@
                             <p class="card-text">@auction.Description</p>
                         </div>
                         <div class="card-footer">
-                            <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+                            @{
+                                var commentsService = new DealDouble.Services.CommentsService();
+                                int? average = commentsService.GetAverageRate(Model.EntityId, auction.Id);
+                                int? defaultStars = 5 - average;
+                            }
+                            <span class="text-warning float-right">
+                                @for (int i = 0; i < average; i++)
+                                {
+                                    <i class="fas fa-star"></i>
+                                }
+                                @for (int i = 0; i < defaultStars; i++)
+                                {
+                                    <i class="far fa-star"></i>
+                                }
+                            </span>
+                            <h6 class="text-danger">$@auction.ActualPrice</h6>
                         </div>
                     </div>
                 </div>

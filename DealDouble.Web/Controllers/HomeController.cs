@@ -1,4 +1,5 @@
-﻿using DealDouble.Services;
+﻿using DealDouble.Entities;
+using DealDouble.Services;
 using DealDouble.Web.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,8 @@ namespace DealDouble.Web.Controllers
             avm.PageDescription = "This is Home page";
             avm.AllAuctions = aucservice.GetAuctions();
             avm.PromotedAuctions = aucservice.GetPromotedAuctions();
+            avm.EntityId = (int)EntitiesEnum.Auction;
+
             return View(avm);
         }
 

@@ -14,6 +14,7 @@ namespace DealDouble.Web.Controllers
         AuctionService aser = new AuctionService();
         CategoryService cser = new CategoryService();
         SharedService sharedservice = new SharedService();
+        CommentsService commentsService = new CommentsService();
         [HttpGet]
         public ActionResult Index(int? categoryID, string searchTerm, int? pageNo)
         {
@@ -191,6 +192,8 @@ namespace DealDouble.Web.Controllers
 
             model.BidsAmount = model.Auction.ActualPrice + model.Auction.Bids.Sum(x => x.BidAmount);
             model.EntityId = Convert.ToInt32(EntitiesEnum.Auction);
+
+            model.AverageRate = commentsService.GetAverageRate(model.EntityId, id);
 
             model.Comments = sharedservice.GetComments(model.EntityId, id);
 

@@ -22,6 +22,8 @@ namespace DealDouble.Web.ViewModels
     {
         public List<Auction> AllAuctions { get; set; }
         public List<Auction> PromotedAuctions { get; set; }
+
+        public int EntityId { get; set; }
     }
     public class AuctionDetailsViewModel : PageViewModel
     {
@@ -31,6 +33,8 @@ namespace DealDouble.Web.ViewModels
         public DealDoubleUser LatestBidder { get; set; }
 
         public int EntityId { get; set; }
+
+        public int? AverageRate { get; set; }
 
         public List<Comment> Comments { get; set; }
     }
