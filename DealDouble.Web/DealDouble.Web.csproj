@@ -191,6 +191,7 @@
     <Compile Include="ViewModels\CategoriesViewModels.cs" />
     <Compile Include="ViewModels\AuctionsViewModels.cs" />
     <Compile Include="ViewModels\BaseViewModels.cs" />
+    <Compile Include="ViewModels\DashBoardViewModel.cs" />
     <Compile Include="ViewModels\SharedViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

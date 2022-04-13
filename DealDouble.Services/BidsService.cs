@@ -17,5 +17,12 @@ namespace DealDouble.Services
             context.Bids.Add(bid);
             return context.SaveChanges() > 0;
         }
+
+        public int GetBidsCount()
+        {
+            var context = new DealDoubleContext();
+
+            return context.Bids.Count();
+        }
     }
 }

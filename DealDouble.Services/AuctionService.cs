@@ -125,5 +125,12 @@ namespace DealDouble.Services
 
             return auction.Count();
         }
+
+        public int GetAuctionsCount()
+        {
+            var context = new DealDoubleContext();
+
+            return context.Auctions.Include(a => a.Category).Count();
+        }
     }
 }

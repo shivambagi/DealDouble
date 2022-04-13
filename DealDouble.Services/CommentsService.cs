@@ -9,6 +9,25 @@ namespace DealDouble.Services
 {
     public class CommentsService
     {
+        #region "singleton"
+        
+        public static CommentsService Instance 
+        { 
+            get { 
+                if(instance == null)
+                {
+                    instance = new CommentsService();
+                }
+                return instance;
+            }
+        }
+        private static CommentsService instance { get; set; }
+        private CommentsService()
+        {
+
+        }
+        #endregion
+
         DealDoubleContext context = new DealDoubleContext();
         public int? GetAverageRate(int entityId, int auctionId)
         {

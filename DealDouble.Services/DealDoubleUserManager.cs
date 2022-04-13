@@ -65,5 +65,12 @@ namespace DealDouble.Services
             }
             return manager;
         }
+
+        public static int GetUsersCount()
+        {
+            var context = new DealDoubleContext();
+
+            return context.Users.Count();
+        }
     }
 }

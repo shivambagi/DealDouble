@@ -14,7 +14,7 @@ namespace DealDouble.Web.Controllers
         AuctionService aser = new AuctionService();
         CategoryService cser = new CategoryService();
         SharedService sharedservice = new SharedService();
-        CommentsService commentsService = new CommentsService();
+        CommentsService commentsService =  CommentsService.Instance;
         [HttpGet]
         public ActionResult Index(int? categoryID, string searchTerm, int? pageNo)
         {

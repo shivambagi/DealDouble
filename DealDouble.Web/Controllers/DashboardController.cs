@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DealDouble.Services;
+using DealDouble.Web.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,10 +10,18 @@ namespace DealDouble.Web.Controllers
 {
     public class DashboardController : Controller
     {
+        AuctionService aucservice = new AuctionService();
+        BidsService bidservice = new BidsService();
         // GET: Dashboard
         public ActionResult Index()
         {
-            return View();
+            var model = new DashboardViewModel();
+
+            model.UsersCount = DealDoubleUserManager.GetUsersCount();
+            model.AuctionsCount = aucservice.GetAuctionsCount();
+            model.BidsCount = bidservice.GetBidsCount();
+
+            return View(model);
         }
     }
 }
