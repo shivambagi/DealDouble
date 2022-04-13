@@ -1,6 +1,7 @@
 ﻿@model DealDouble.Web.ViewModels.AuctionListingViewModel
 @{
     var categoryId = Model.CategoryId.HasValue ? Model.CategoryId.Value : 0;
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
 }
 
 <div class="row">
